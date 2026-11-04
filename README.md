@@ -1,0 +1,1 @@
+Terraform on AWS, scanned with Checkov/Prisma Cloud in PRs, deployed through GitHub OIDC, monitored with CloudTrail + EventBridge.

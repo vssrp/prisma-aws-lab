@@ -1,0 +1,10 @@
+# Terraform working files and state: never commit these
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan*
+crash.log
+# Local env files
+.env
+*.zip
