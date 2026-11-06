@@ -1,0 +1,30 @@
+name: security-scan
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write     # lets results show in the repo's Security tab
+
+jobs:
+  checkov-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkov IaC scan
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: .
+          framework: terraform,github_actions
+          soft_fail: false             # any failed check fails the job
+          output_format: cli,sarif
+          output_file_path: console,results.sarif
+
+      - name: Upload results to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
