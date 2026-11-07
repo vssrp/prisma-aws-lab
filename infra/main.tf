@@ -1,3 +1,16 @@
+resource "random_id" "suffix" {
+  byte_length = 4
+}
+
+module "app_bucket" {
+  source      = "./modules/secure-s3"
+  bucket_name = "sriram-lab-app-${random_id.suffix.hex}"
+}
+
+data "aws_vpc" "default" {
+  default = true
+}
+
 resource "aws_security_group" "web" {
   #checkov:skip=CKV2_AWS_5:Lab SG, attached to an instance later
   name        = "lab-web"
