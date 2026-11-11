@@ -18,6 +18,7 @@ resource "aws_kms_key" "this" {
   })
 }
 
+#trivy:ignore:AVD-AWS-0089 Access logging covered by the CloudTrail trail in Phase 7
 resource "aws_s3_bucket" "this" {
   #checkov:skip=CKV_AWS_144:Cross-region replication not needed for lab data
   #checkov:skip=CKV_AWS_18:Access logging covered by the CloudTrail trail in Phase 7
