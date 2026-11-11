@@ -28,3 +28,26 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: results.sarif
+  
+    trivy-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Trivy IaC and secrets
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: misconfig,secret
+          severity: HIGH,CRITICAL
+          format: sarif
+          output: trivy.sarif
+          exit-code: "1"              # fail the PR on high/critical
+
+      - name: Record findings in the Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy.sarif
+          category: trivy
