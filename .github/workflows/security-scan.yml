@@ -41,6 +41,8 @@ jobs:
           scan-ref: .
           scanners: misconfig,secret
           severity: HIGH,CRITICAL
+          limit-severities-for-sarif: true
+          version: v0.76.2
           format: sarif
           output: trivy.sarif
           exit-code: "1"              # fail the PR on high/critical
