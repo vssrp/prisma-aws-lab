@@ -8,3 +8,4 @@ crash.log
 # Local env files
 .env
 *.zipoutput/
+*.zip
