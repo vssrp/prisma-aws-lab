@@ -91,6 +91,7 @@ resource "aws_s3_bucket_policy" "trail" {
 }
 
 #trivy:ignore:AVD-AWS-0162 CloudWatch Logs delivery not needed for the lab; EventBridge handles alerting
+#trivy:ignore:AVD-AWS-0015 SSE-S3 instead of KMS to stay in the free tier
 resource "aws_cloudtrail" "lab" {
   #checkov:skip=CKV_AWS_35:SSE-S3 instead of KMS to stay in the free tier
   #checkov:skip=CKV_AWS_252:Alerts go through EventBridge, not trail SNS
