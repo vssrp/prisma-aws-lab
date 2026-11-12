@@ -52,6 +52,7 @@ resource "aws_s3_bucket_versioning" "trail" {
   versioning_configuration { status = "Enabled" }
 }
 
+#trivy:ignore:AVD-AWS-0132 SSE-S3 instead of a customer-managed KMS key to stay in the free tier
 resource "aws_s3_bucket_server_side_encryption_configuration" "trail" {
   bucket = aws_s3_bucket.trail.id
   rule {
@@ -105,9 +106,10 @@ resource "aws_cloudtrail" "lab" {
 }
 
 # ---------- SNS topic and email ----------
+#trivy:ignore:AVD-AWS-0136 AWS-managed SNS key is enough for lab alerts; a CMK (~$1/month) would be used in production
 resource "aws_sns_topic" "alerts" {
-  #checkov:skip=CKV_AWS_26:Alert text holds no sensitive data in the lab
   name = "lab-security-alerts"
+  kms_master_key_id = "alias/aws/sns"
 }
 
 resource "aws_sns_topic_subscription" "email" {
