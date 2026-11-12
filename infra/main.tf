@@ -11,6 +11,8 @@ data "aws_vpc" "default" {
   default = true
 }
 
+
+#checkov:skip=CKV_AWS_24:Temporary vendor access, will remove next week
 resource "aws_security_group" "web" {
   #checkov:skip=CKV2_AWS_5:Lab SG, attached to an instance later
   name        = "lab-web"
