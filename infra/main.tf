@@ -12,9 +12,10 @@ data "aws_vpc" "default" {
 }
 
 
-#checkov:skip=CKV_AWS_24:Temporary vendor access, will remove next week
+#trivy:ignore:AVD-AWS-0107 Temporary vendor access, will remove next week
 resource "aws_security_group" "web" {
   #checkov:skip=CKV2_AWS_5:Lab SG, attached to an instance later
+  #checkov:skip=CKV_AWS_24:Temporary vendor access, will remove next week  #checkov:skip=CKV2_AWS_5:Lab SG, attached to an instance later
   name        = "lab-web"
   description = "Lab web SG, SSH from the private network only"
   vpc_id      = data.aws_vpc.default.id
